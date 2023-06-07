@@ -1,8 +1,9 @@
 plugins {
-    kotlin("kapt")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization").version("1.6.10")
+    kotlin("kapt")
 }
 
 android {
@@ -55,11 +56,11 @@ android {
 }
 
 dependencies {
-
-    val ktorVersion = "2.3.1"
     val roomVersion = "2.4.2"
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation(project(path = ":domain"))
+
+    implementation(libs.androidx.ktx)
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -72,11 +73,6 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
-
-    // Ktor
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     // Room
     implementation("androidx.room:room-runtime:$roomVersion")

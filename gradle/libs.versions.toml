@@ -1,0 +1,12 @@
+[versions]
+ktx = "1.10.1"
+androidGradlePlugin = "8.0.2"
+
+[libraries]
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+hilt = { id = "com.google.dagger.hilt.android", version = "2.44" }
+kotlin = { id = "org.jetbrains.kotlin.android", version = "1.7.20" }
