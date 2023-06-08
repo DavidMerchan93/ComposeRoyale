@@ -9,5 +9,3 @@ pluginManagement {
 rootProject.name = "ComposeRoyal"
 
 include(":app")
-include(":data")
-include(":domain")

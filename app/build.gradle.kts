@@ -1,7 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
+    id("com.android.application") version "8.0.2"
+    id("org.jetbrains.kotlin.android") version "1.8.0"
+    id("com.google.dagger.hilt.android") version "2.44"
+
     kotlin("plugin.serialization").version("1.6.10")
     kotlin("kapt")
 }
@@ -57,8 +58,7 @@ android {
 
 dependencies {
     val roomVersion = "2.4.2"
-
-    implementation(project(path = ":domain"))
+    val ktorVersion = "2.3.1"
 
     implementation(libs.androidx.ktx)
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -69,6 +69,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.44")
@@ -78,6 +79,14 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+
+    // Ktor
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation("io.ktor:ktor-client-android:$ktorVersion")
 
     testImplementation("junit:junit:4.13.2")
 
