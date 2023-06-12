@@ -11,8 +11,15 @@ class CardRepositoryImpl @Inject constructor(
     private val cardsApi: CardsApi,
 ) : CardRepository {
     override fun getAllCards(): Flow<List<CardResponse>> = flow {
-        emit(
-            cardsApi.getAllCard().items,
-        )
+        val result = cardsApi.getAllCard()
+        when {
+            result.isSuccess -> {
+                emit(result.getOrNull()?.items ?: emptyList())
+            }
+
+            else -> {
+                throw result.exceptionOrNull() ?: Throwable("Error al obtener la lista")
+            }
+        }
     }
 }

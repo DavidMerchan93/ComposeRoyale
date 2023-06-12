@@ -1,12 +1,12 @@
 package com.david.composeroyal.di
 
-import com.david.composeroyal.data.api.CardsApi
+import android.content.Context
+import com.david.composeroyal.data.local.PreferenceSettings
 import com.david.composeroyal.data.network.ktorHttpClient
-import com.david.composeroyal.data.repositories.CardRepositoryImpl
-import com.david.composeroyal.domain.repositories.CardRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import javax.inject.Singleton
@@ -17,19 +17,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient {
-        return ktorHttpClient()
+    fun providePreferences(
+        @ApplicationContext context: Context,
+    ): PreferenceSettings {
+        return PreferenceSettings(context)
     }
 
     @Provides
     @Singleton
-    fun provideCardApi(httpClient: HttpClient): CardsApi {
-        return CardsApi(httpClient)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCardsRepository(cardsApi: CardsApi): CardRepository {
-        return CardRepositoryImpl(cardsApi)
+    fun provideHttpClient(preferenceSettings: PreferenceSettings): HttpClient {
+        return ktorHttpClient(preferenceSettings)
     }
 }
