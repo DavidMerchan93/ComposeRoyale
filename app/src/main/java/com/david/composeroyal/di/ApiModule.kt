@@ -1,12 +1,12 @@
 package com.david.composeroyal.di
 
-import com.david.composeroyal.data.api.CardsApi
+import com.david.composeroyal.data.api.CategoriesApi
 import com.david.composeroyal.data.api.TokenApi
+import com.david.composeroyal.data.network.KtorHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.ktor.client.HttpClient
 import javax.inject.Singleton
 
 @Module
@@ -14,13 +14,13 @@ import javax.inject.Singleton
 object ApiModule {
     @Provides
     @Singleton
-    fun provideCardApi(httpClient: HttpClient): CardsApi {
-        return CardsApi(httpClient)
+    fun provideCardApi(httpClient: KtorHttpClient): CategoriesApi {
+        return CategoriesApi(httpClient)
     }
 
     @Provides
     @Singleton
-    fun provideTokenApi(httpClient: HttpClient): TokenApi {
+    fun provideTokenApi(httpClient: KtorHttpClient): TokenApi {
         return TokenApi(httpClient)
     }
 }

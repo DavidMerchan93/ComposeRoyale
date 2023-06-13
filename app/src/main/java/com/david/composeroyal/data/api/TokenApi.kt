@@ -3,17 +3,17 @@ package com.david.composeroyal.data.api
 import com.david.composeroyal.data.api.common.ApiRoutes
 import com.david.composeroyal.data.api.common.Constants
 import com.david.composeroyal.data.models.TokenResponse
-import io.ktor.client.HttpClient
+import com.david.composeroyal.data.network.KtorHttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.submitForm
 import io.ktor.http.parameters
 
 class TokenApi(
-    private val httpClient: HttpClient,
+    private val httpClient: KtorHttpClient,
 ) {
     suspend fun getToken(): Result<TokenResponse> {
         return try {
-            val response = httpClient.submitForm(
+            val response = httpClient.getAccountTokenHttpClient().submitForm(
                 url = ApiRoutes.TOKEN_PATH,
                 formParameters = parameters {
                     append("grant_type", "client_credentials")

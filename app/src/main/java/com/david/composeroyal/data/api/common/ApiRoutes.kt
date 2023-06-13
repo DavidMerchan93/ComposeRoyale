@@ -5,5 +5,5 @@ object ApiRoutes {
     private const val BASE_URL = "https://api.spotify.com"
 
     const val TOKEN_PATH = "$BASE_ACCOUNT_URL/api/token"
-    const val CARDS_PATH = "$BASE_URL/v1/browse/categories"
+    const val CATEGORIES_PATH = "$BASE_URL/v1/browse/categories"
 }

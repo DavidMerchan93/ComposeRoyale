@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -14,23 +13,23 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Modifier
-import com.david.composeroyal.presentation.states.AllCardsState
+import com.david.composeroyal.presentation.states.CategoriesState
 import com.david.composeroyal.presentation.theme.ComposeRoyalTheme
 import com.david.composeroyal.presentation.view.common.ErrorMessage
 import com.david.composeroyal.presentation.view.common.Loader
-import com.david.composeroyal.presentation.viewModels.CardsViewModel
+import com.david.composeroyal.presentation.viewModels.CategoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeActivity : ComponentActivity() {
 
-    private val cardsViewModel: CardsViewModel by viewModels()
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val cardsState = cardsViewModel.allCardsState
+            val categoriesState = categoriesViewModel.allCategoriesState
 
             ComposeRoyalTheme {
                 Scaffold(
@@ -46,20 +45,20 @@ class HomeActivity : ComponentActivity() {
                             modifier = Modifier.padding(paddingValues)
                                 .background(MaterialTheme.colorScheme.background),
                         ) {
-                            when (cardsState.value) {
-                                AllCardsState.Empty -> Unit
+                            when (categoriesState.value) {
+                                CategoriesState.Empty -> Unit
 
-                                AllCardsState.Loading -> {
+                                CategoriesState.Loading -> {
                                     Loader()
                                 }
 
-                                AllCardsState.Error -> {
+                                CategoriesState.Error -> {
                                     ErrorMessage()
                                 }
 
-                                is AllCardsState.Success -> {
+                                is CategoriesState.Success -> {
                                     println("Success")
-                                    HomeScreen(cards = (cardsState.value as AllCardsState.Success).cardsCollection)
+                                    HomeScreen(cards = (categoriesState.value as CategoriesState.Success).cardsCollection)
                                 }
                             }
                         }

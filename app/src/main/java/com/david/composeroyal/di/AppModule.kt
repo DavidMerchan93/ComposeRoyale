@@ -2,13 +2,13 @@ package com.david.composeroyal.di
 
 import android.content.Context
 import com.david.composeroyal.data.local.PreferenceSettings
-import com.david.composeroyal.data.network.ktorHttpClient
+import com.david.composeroyal.data.network.KtorHttpClient
+import com.david.composeroyal.data.network.KtorHttpClientImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.ktor.client.HttpClient
 import javax.inject.Singleton
 
 @Module
@@ -25,7 +25,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(preferenceSettings: PreferenceSettings): HttpClient {
-        return ktorHttpClient(preferenceSettings)
+    fun provideKtorHttpClient(preferenceSettings: PreferenceSettings): KtorHttpClient {
+        return KtorHttpClientImpl(preferenceSettings)
     }
 }

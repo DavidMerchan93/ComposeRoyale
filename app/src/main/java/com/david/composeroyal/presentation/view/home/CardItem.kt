@@ -17,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.david.composeroyal.domain.models.CardModel
+import com.david.composeroyal.domain.models.CategoriesModel
 
 @Composable
-fun CardItem(card: CardModel) {
+fun CardItem(card: CategoriesModel) {
     Card(
         modifier = Modifier.padding(8.dp),
         shape = RoundedCornerShape(8.dp),
@@ -37,7 +37,6 @@ fun CardItem(card: CardModel) {
             )
             CardText(text = "Id: ${card.id}", fontSize = 14)
             CardText(text = card.name, fontSize = 18)
-            CardText(text = "Max Level: ${card.maxLevel}", fontSize = 14)
         }
     }
 }
@@ -58,11 +57,11 @@ fun CardText(text: String, fontSize: Int) {
 fun CardPreview() {
     Surface {
         CardItem(
-            card = CardModel(
-                id = 12L,
+            card = CategoriesModel(
+                id = "12L",
                 name = "David",
-                maxLevel = 100,
                 icon = "",
+                href = "",
             ),
         )
     }
