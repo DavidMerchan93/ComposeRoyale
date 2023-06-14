@@ -7,23 +7,26 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.david.composeroyal.domain.models.CategoriesModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardItem(card: CategoriesModel) {
+fun CardItem(category: CategoriesModel, onCategorySelected: (id: String, name: String) -> Unit) {
     Card(
         modifier = Modifier.padding(8.dp),
         shape = RoundedCornerShape(8.dp),
+        onClick = {
+            onCategorySelected(category.id, category.name)
+        },
     ) {
         Column(
             modifier = Modifier
@@ -31,12 +34,11 @@ fun CardItem(card: CategoriesModel) {
                 .padding(12.dp),
         ) {
             AsyncImage(
-                model = card.icon,
-                contentDescription = card.name,
+                model = category.icon,
+                contentDescription = category.name,
                 modifier = Modifier.fillMaxWidth().height(100.dp),
             )
-            CardText(text = "Id: ${card.id}", fontSize = 14)
-            CardText(text = card.name, fontSize = 18)
+            CardText(text = category.name, fontSize = 18)
         }
     }
 }
@@ -50,19 +52,4 @@ fun CardText(text: String, fontSize: Int) {
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onPrimaryContainer,
     )
-}
-
-@Preview
-@Composable
-fun CardPreview() {
-    Surface {
-        CardItem(
-            card = CategoriesModel(
-                id = "12L",
-                name = "David",
-                icon = "",
-                href = "",
-            ),
-        )
-    }
 }
