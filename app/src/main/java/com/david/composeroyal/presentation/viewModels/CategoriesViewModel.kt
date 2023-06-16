@@ -31,7 +31,7 @@ class CategoriesViewModel @Inject constructor(
         allCategoriesState = CategoriesState(loading = true)
 
         getAllCategoriesUseCase().catch {
-            allCategoriesState = CategoriesState(error = true)
+            allCategoriesState = CategoriesState(isError = true)
         }.map { cards ->
             allCategoriesState = CategoriesState(cardsCollection = cards)
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)

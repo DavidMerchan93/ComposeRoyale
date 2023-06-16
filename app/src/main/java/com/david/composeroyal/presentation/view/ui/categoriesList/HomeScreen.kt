@@ -19,17 +19,21 @@ fun HomeScreen(
     Surface(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
     ) {
-        if (categoriesState.loading) {
-            Loader()
-        }
-        if (categoriesState.cardsCollection.isNotEmpty()) {
-            HomeScreenList(
-                cards = categoriesState.cardsCollection,
-                onCategorySelected = onCategorySelected,
-            )
-        }
-        if (categoriesState.error) {
-            ErrorMessage()
+        when {
+            (categoriesState.loading) -> {
+                Loader()
+            }
+
+            (categoriesState.cardsCollection.isNotEmpty()) -> {
+                HomeScreenList(
+                    cards = categoriesState.cardsCollection,
+                    onCategorySelected = onCategorySelected,
+                )
+            }
+
+            (categoriesState.isError) -> {
+                ErrorMessage()
+            }
         }
     }
 }

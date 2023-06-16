@@ -1,5 +1,6 @@
 package com.david.composeroyal.di
 
+import com.david.composeroyal.data.api.ArtistQueryListApi
 import com.david.composeroyal.data.api.CategoriesApi
 import com.david.composeroyal.data.api.TokenApi
 import com.david.composeroyal.data.network.KtorHttpClient
@@ -14,13 +15,19 @@ import javax.inject.Singleton
 object ApiModule {
     @Provides
     @Singleton
+    fun provideTokenApi(httpClient: KtorHttpClient): TokenApi {
+        return TokenApi(httpClient)
+    }
+
+    @Provides
+    @Singleton
     fun provideCardApi(httpClient: KtorHttpClient): CategoriesApi {
         return CategoriesApi(httpClient)
     }
 
     @Provides
     @Singleton
-    fun provideTokenApi(httpClient: KtorHttpClient): TokenApi {
-        return TokenApi(httpClient)
+    fun provideArtistQueryListApi(httpClient: KtorHttpClient): ArtistQueryListApi {
+        return ArtistQueryListApi(httpClient)
     }
 }

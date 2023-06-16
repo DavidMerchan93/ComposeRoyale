@@ -1,8 +1,8 @@
 package com.david.composeroyal.domain.repositories
 
-import com.david.composeroyal.data.models.categories.Category
+import com.david.composeroyal.domain.models.CategoriesModel
 import kotlinx.coroutines.flow.Flow
 
 interface CategoriesRepository {
-    fun getAllCategories(): Flow<List<Category>>
+    fun getAllCategories(): Flow<List<CategoriesModel>>
 }
