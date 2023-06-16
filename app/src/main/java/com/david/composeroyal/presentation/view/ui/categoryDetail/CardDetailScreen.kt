@@ -1,4 +1,4 @@
-package com.david.composeroyal.presentation.view.categoryDetail
+package com.david.composeroyal.presentation.view.ui.categoryDetail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

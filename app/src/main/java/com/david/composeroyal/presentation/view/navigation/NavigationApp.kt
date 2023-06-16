@@ -1,25 +1,41 @@
 package com.david.composeroyal.presentation.view.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.david.composeroyal.presentation.states.CategoriesState
-import com.david.composeroyal.presentation.view.categoryDetail.CategoryDetailScreen
-import com.david.composeroyal.presentation.view.home.HomeScreen
+import androidx.navigation.navigation
+import com.david.composeroyal.presentation.view.ui.categoryDetail.CategoryDetailScreen
+import com.david.composeroyal.presentation.view.ui.favorites.FavoriteScreen
+import com.david.composeroyal.presentation.view.ui.categoriesList.HomeScreen
+import com.david.composeroyal.presentation.view.ui.profile.ProfileScreen
 
 @Composable
-fun NavigationApp(categoriesState: MutableState<CategoriesState>) {
-    val navController = rememberNavController()
+fun NavigationApp(
+    navController: NavHostController,
+) {
     NavHost(
         navController = navController,
-        startDestination = NavigationRoutes.Home.route,
+        startDestination = MainRoutes.HOME_NAVIGATION.key,
     ) {
-        composable(NavigationRoutes.Home) {
-            HomeScreen(categoriesState = categoriesState) { id, name ->
+        categoryNavigation(navController)
+        favoriteNavigation(navController)
+        profileNavigation(navController)
+    }
+}
+
+fun NavGraphBuilder.categoryNavigation(
+    navController: NavController,
+) {
+    navigation(
+        startDestination = NavigationRoutes.Categories.route,
+        route = MainRoutes.HOME_NAVIGATION.key,
+    ) {
+        composable(NavigationRoutes.Categories) {
+            HomeScreen { id, name ->
                 navController.navigate(NavigationRoutes.CategoryDetail.createRoute(id, name))
             }
         }
@@ -28,6 +44,32 @@ fun NavigationApp(categoriesState: MutableState<CategoriesState>) {
                 id = navBackStack.findArg(NavigationArgs.CATEGORY_ID),
                 name = navBackStack.findArg(NavigationArgs.CATEGORY_NAME),
             )
+        }
+    }
+}
+
+fun NavGraphBuilder.favoriteNavigation(
+    navController: NavController,
+) {
+    navigation(
+        startDestination = NavigationRoutes.Favorite.route,
+        route = MainRoutes.FAVORITE_NAVIGATION.key,
+    ) {
+        composable(NavigationRoutes.Favorite) {
+            FavoriteScreen()
+        }
+    }
+}
+
+fun NavGraphBuilder.profileNavigation(
+    navController: NavController,
+) {
+    navigation(
+        startDestination = NavigationRoutes.Profile.route,
+        route = MainRoutes.PROFILE_NAVIGATION.key,
+    ) {
+        composable(NavigationRoutes.Profile) {
+            ProfileScreen()
         }
     }
 }

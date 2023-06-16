@@ -1,7 +1,8 @@
-package com.david.composeroyal.presentation.view.home
+package com.david.composeroyal.presentation.view.ui.categoriesList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,15 +32,18 @@ fun CardItem(category: CategoriesModel, onCategorySelected: (id: String, name: S
     ) {
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .padding(12.dp),
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primaryContainer),
         ) {
             AsyncImage(
                 model = category.icon,
                 contentDescription = category.name,
-                modifier = Modifier.fillMaxWidth().height(100.dp),
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
             )
-            CardText(text = category.name, fontSize = 18)
+            CardText(text = category.name, fontSize = 22)
         }
     }
 }
@@ -46,10 +51,13 @@ fun CardItem(category: CategoriesModel, onCategorySelected: (id: String, name: S
 @Composable
 fun CardText(text: String, fontSize: Int) {
     Text(
-        modifier = Modifier.fillMaxWidth().padding(4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp, vertical = 8.dp),
         text = text,
         fontSize = fontSize.sp,
         textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onPrimaryContainer,
     )
 }

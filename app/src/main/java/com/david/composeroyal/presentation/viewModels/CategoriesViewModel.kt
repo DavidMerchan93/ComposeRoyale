@@ -1,7 +1,8 @@
 package com.david.composeroyal.presentation.viewModels
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.david.composeroyal.domain.useCase.GetAllCategoriesUseCase
@@ -18,23 +19,21 @@ import javax.inject.Inject
 class CategoriesViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
 ) : ViewModel() {
-    private val _allCategoriesState: MutableState<CategoriesState> =
-        mutableStateOf(CategoriesState.Empty)
 
-    val allCategoriesState: MutableState<CategoriesState>
-        get() = _allCategoriesState
+    var allCategoriesState by mutableStateOf(CategoriesState(loading = true))
+        private set
 
     init {
         getAllCards()
     }
 
     private fun getAllCards() {
-        _allCategoriesState.value = CategoriesState.Loading
+        allCategoriesState = CategoriesState(loading = true)
 
         getAllCategoriesUseCase().catch {
-            _allCategoriesState.value = CategoriesState.Error
+            allCategoriesState = CategoriesState(error = true)
         }.map { cards ->
-            _allCategoriesState.value = CategoriesState.Success(cards)
+            allCategoriesState = CategoriesState(cardsCollection = cards)
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }
 }
