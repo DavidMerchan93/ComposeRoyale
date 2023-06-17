@@ -8,3 +8,7 @@ data class Image(
     val height: Int? = 0,
     val width: Int? = 0,
 )
+
+fun List<Image>.mapToDomain(): List<String> {
+    return map { it.url }
+}

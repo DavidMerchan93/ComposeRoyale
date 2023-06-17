@@ -1,6 +1,9 @@
 package com.david.composeroyal.data.models.search
 
+import com.david.composeroyal.data.models.common.ExternalUrls
+import com.david.composeroyal.data.models.common.Followers
 import com.david.composeroyal.data.models.common.Image
+import com.david.composeroyal.data.models.common.mapToDomain
 import com.david.composeroyal.domain.models.ArtistModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -33,23 +36,12 @@ data class Item(
     val uri: String,
 )
 
-@Serializable
-data class ExternalUrls(
-    val spotify: String,
-)
-
-@Serializable
-data class Followers(
-    val href: String? = String(),
-    val total: Int,
-)
-
 fun SearchArtistResponse.mapToDomain(): List<ArtistModel> {
     return artists.items.map { artist ->
         ArtistModel(
             id = artist.id,
             name = artist.name,
-            images = artist.images.map { it.url },
+            images = artist.images.mapToDomain(),
             externalUrl = artist.externalUrls.spotify,
             followersCount = artist.followers.total,
             genres = artist.genres.take(4).filter { it.isNotEmpty() },

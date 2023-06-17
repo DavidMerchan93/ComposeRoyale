@@ -46,6 +46,20 @@ sealed class NavigationRoutes(
         }
     }
 
+    object ArtistDetail : NavigationRoutes(
+        mainRoute = MainRoutes.HOME_NAVIGATION,
+        baseRoute = ARTIST_DETAIL_PATH,
+        navigationArgs = listOf(NavigationArgs.ARTIST_ID),
+    ) {
+        fun createRoute(id: String): String {
+            return listOf(
+                mainRoute.key,
+                baseRoute,
+                id,
+            ).joinToString("/")
+        }
+    }
+
     object Favorite : NavigationRoutes(
         mainRoute = MainRoutes.FAVORITE_NAVIGATION,
         baseRoute = FAVORITE_PATH,
@@ -66,9 +80,11 @@ enum class MainRoutes(val key: String, val icon: ImageVector) {
 enum class NavigationArgs(val key: String, val type: NavType<*> = NavType.StringType) {
     CATEGORY_ID("categoryId", NavType.StringType),
     CATEGORY_NAME("categoryName", NavType.StringType),
+    ARTIST_ID("artistId", NavType.StringType),
 }
 
 private const val CATEGORIES_PATH = "categories"
 private const val CATEGORY_DETAIL_PATH = "categoryDetail"
+private const val ARTIST_DETAIL_PATH = "artistDetail"
 private const val FAVORITE_PATH = "favoriteList"
 private const val PROFILE_PATH = "userProfile"

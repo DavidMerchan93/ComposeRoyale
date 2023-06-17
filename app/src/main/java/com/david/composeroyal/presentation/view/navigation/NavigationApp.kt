@@ -8,9 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.david.composeroyal.presentation.view.ui.categoriesList.HomeScreen
+import com.david.composeroyal.presentation.view.ui.categoryDetail.ArtistDetailScreen
 import com.david.composeroyal.presentation.view.ui.categoryDetail.CategoryDetailScreen
 import com.david.composeroyal.presentation.view.ui.favorites.FavoriteScreen
-import com.david.composeroyal.presentation.view.ui.categoriesList.HomeScreen
 import com.david.composeroyal.presentation.view.ui.profile.ProfileScreen
 
 @Composable
@@ -39,11 +40,13 @@ fun NavGraphBuilder.categoryNavigation(
                 navController.navigate(NavigationRoutes.CategoryDetail.createRoute(id, name))
             }
         }
-        composable(NavigationRoutes.CategoryDetail) { navBackStack ->
-            CategoryDetailScreen(
-                id = navBackStack.findArg(NavigationArgs.CATEGORY_ID),
-                name = navBackStack.findArg(NavigationArgs.CATEGORY_NAME),
-            )
+        composable(NavigationRoutes.CategoryDetail) {
+            CategoryDetailScreen {
+                navController.navigate(NavigationRoutes.ArtistDetail.createRoute(it))
+            }
+        }
+        composable(NavigationRoutes.ArtistDetail) {
+            ArtistDetailScreen()
         }
     }
 }

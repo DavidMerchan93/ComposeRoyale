@@ -7,4 +7,5 @@ object ApiRoutes {
     const val TOKEN_PATH = "$BASE_ACCOUNT_URL/api/token"
     const val CATEGORIES_PATH = "$BASE_URL/v1/browse/categories"
     const val SEARCH_PATH = "$BASE_URL/v1/search"
+    const val ARTIST_PATH = "$BASE_URL/v1/artists"
 }

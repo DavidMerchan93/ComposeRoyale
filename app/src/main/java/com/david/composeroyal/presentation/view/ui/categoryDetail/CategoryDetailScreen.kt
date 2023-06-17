@@ -8,9 +8,8 @@ import com.david.composeroyal.presentation.viewModels.ArtistByQueryViewModel
 
 @Composable
 fun CategoryDetailScreen(
-    id: String,
-    name: String,
     artistsListViewModel: ArtistByQueryViewModel = hiltViewModel(),
+    artistSelected: (artistId: String) -> Unit,
 ) {
     val artistsListState = artistsListViewModel.allArtistState
     when {
@@ -19,7 +18,10 @@ fun CategoryDetailScreen(
         }
 
         (artistsListState.artist.isNotEmpty()) -> {
-            ArtistList(artistsListState.artist)
+            ArtistList(
+                artists = artistsListState.artist,
+                artistSelect = artistSelected,
+            )
         }
 
         (artistsListState.hasError) -> {

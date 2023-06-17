@@ -1,8 +1,10 @@
 package com.david.composeroyal.di
 
+import com.david.composeroyal.data.api.ArtistApi
 import com.david.composeroyal.data.api.ArtistQueryListApi
 import com.david.composeroyal.data.api.CategoriesApi
 import com.david.composeroyal.data.api.TokenApi
+import com.david.composeroyal.data.api.TracksApi
 import com.david.composeroyal.data.network.KtorHttpClient
 import dagger.Module
 import dagger.Provides
@@ -29,5 +31,17 @@ object ApiModule {
     @Singleton
     fun provideArtistQueryListApi(httpClient: KtorHttpClient): ArtistQueryListApi {
         return ArtistQueryListApi(httpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideArtistApi(httpClient: KtorHttpClient): ArtistApi {
+        return ArtistApi(httpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTracksApi(httpClient: KtorHttpClient): TracksApi {
+        return TracksApi(httpClient)
     }
 }

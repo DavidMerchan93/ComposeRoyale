@@ -1,14 +1,20 @@
 package com.david.composeroyal.di
 
+import com.david.composeroyal.data.api.ArtistApi
 import com.david.composeroyal.data.api.ArtistQueryListApi
 import com.david.composeroyal.data.api.CategoriesApi
 import com.david.composeroyal.data.api.TokenApi
+import com.david.composeroyal.data.api.TracksApi
 import com.david.composeroyal.data.repositories.ArtistByQueryRepositoryImpl
+import com.david.composeroyal.data.repositories.ArtistRepositoryImpl
 import com.david.composeroyal.data.repositories.CategoriesRepositoryImpl
 import com.david.composeroyal.data.repositories.TokenRepositoryImpl
+import com.david.composeroyal.data.repositories.TracksRepositoryImpl
 import com.david.composeroyal.domain.repositories.ArtistByQueryRepository
+import com.david.composeroyal.domain.repositories.ArtistRepository
 import com.david.composeroyal.domain.repositories.CategoriesRepository
 import com.david.composeroyal.domain.repositories.TokenRepository
+import com.david.composeroyal.domain.repositories.TracksRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,4 +44,15 @@ object RepositoryModule {
         return ArtistByQueryRepositoryImpl(artistQueryListApi)
     }
 
+    @Provides
+    @Singleton
+    fun provideArtistRepository(artistApi: ArtistApi): ArtistRepository {
+        return ArtistRepositoryImpl(artistApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTracksRepository(tracksApi: TracksApi): TracksRepository {
+        return TracksRepositoryImpl(tracksApi)
+    }
 }
