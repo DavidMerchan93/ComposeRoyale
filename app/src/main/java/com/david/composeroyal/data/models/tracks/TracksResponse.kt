@@ -55,7 +55,7 @@ fun Track.mapToDomain(): TrackModel {
         id = id,
         name = name,
         popularity = popularity,
-        uri = uri,
+        uri = externalUrls.spotify,
         album = album.mapToDomain(),
         artist = artists.firstOrNull()?.mapToDomain(),
     )

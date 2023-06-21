@@ -7,6 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.david.composeroyal.common.getString
+import com.david.composeroyal.domain.models.ArtistModel
+import com.david.composeroyal.domain.models.TrackModel
 import com.david.composeroyal.domain.useCase.GetArtistUseCase
 import com.david.composeroyal.domain.useCase.GetTracksUseCase
 import com.david.composeroyal.presentation.states.ArtistTracksState
@@ -26,6 +28,11 @@ class ArtistViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    var artistInfo: ArtistModel? = null
+        private set
+
+    val tracksArtistInfo = mutableListOf<TrackModel>()
+
     var artisTrackState by mutableStateOf(ArtistTracksState(isLoading = true))
         private set
 
@@ -38,16 +45,21 @@ class ArtistViewModel @Inject constructor(
 
     private fun getArtistData(id: String) {
         getArtistUseCase(id).catch {
+            artistInfo = null
             artisTrackState = ArtistTracksState(isError = true)
         }.map {
+            artistInfo = it
             artisTrackState = ArtistTracksState(artist = it)
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }
 
     private fun getTopTracks(id: String) {
         getTracksUseCase(id).catch {
+            tracksArtistInfo.clear()
             artisTrackState = ArtistTracksState(isError = true)
         }.map {
+            tracksArtistInfo.clear()
+            tracksArtistInfo.addAll(it)
             artisTrackState = ArtistTracksState(tracks = it)
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }

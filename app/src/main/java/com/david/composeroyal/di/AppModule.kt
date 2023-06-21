@@ -1,7 +1,9 @@
 package com.david.composeroyal.di
 
 import android.content.Context
+import androidx.room.Room
 import com.david.composeroyal.data.local.PreferenceSettings
+import com.david.composeroyal.data.local.database.AppDatabase
 import com.david.composeroyal.data.network.KtorHttpClient
 import com.david.composeroyal.data.network.KtorHttpClientImpl
 import dagger.Module
@@ -28,4 +30,14 @@ object AppModule {
     fun provideKtorHttpClient(preferenceSettings: PreferenceSettings): KtorHttpClient {
         return KtorHttpClientImpl(preferenceSettings)
     }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(
+        @ApplicationContext context: Context,
+    ): AppDatabase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "RoyalDatabase",
+    ).build()
 }
