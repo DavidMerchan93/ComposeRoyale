@@ -55,6 +55,10 @@ fun ArtistDetailScreen(
     val artistLocalState = artistLocalViewModel.artistLocalState
 
     when {
+        artisTrackState.isError -> {
+            ErrorMessage()
+        }
+
         artisTrackState.artist != null && artisTrackState.tracks.isNotEmpty() -> {
             ArtistTracksData(
                 artistModel = artisTrackState.artist,
@@ -63,20 +67,9 @@ fun ArtistDetailScreen(
                 if (artist.isFavorite) {
                     artistLocalViewModel.deleteArtist(artist.id)
                 } else {
-                    artistLocalViewModel.saveArtist(
-                        artistId = artist.id,
-                        name = artist.name,
-                        image = artist.images.randomOrNull() ?: String(),
-                        followers = artist.followersCount,
-                        popularity = artist.popularity,
-                        genders = artist.genres,
-                    )
+                    artistLocalViewModel.saveArtist(artist)
                 }
             }
-        }
-
-        artisTrackState.isError -> {
-            ErrorMessage()
         }
 
         else -> {

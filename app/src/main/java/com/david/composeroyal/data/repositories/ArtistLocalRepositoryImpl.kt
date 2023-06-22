@@ -1,8 +1,8 @@
 package com.david.composeroyal.data.repositories
 
 import com.david.composeroyal.data.local.dao.ArtistDao
-import com.david.composeroyal.data.local.entities.ArtistEntity
 import com.david.composeroyal.data.local.entities.mapToDomain
+import com.david.composeroyal.data.local.entities.mapToEntity
 import com.david.composeroyal.domain.models.ArtistModel
 import com.david.composeroyal.domain.repositories.ArtistLocalRepository
 import javax.inject.Inject
@@ -10,25 +10,9 @@ import javax.inject.Inject
 class ArtistLocalRepositoryImpl @Inject constructor(
     private val artistDao: ArtistDao,
 ) : ArtistLocalRepository {
-    override fun saveArtist(
-        artistId: String,
-        name: String,
-        image: String,
-        followers: Int,
-        popularity: Int,
-        genders: List<String>,
-    ): Boolean {
+    override fun saveArtist(artistModel: ArtistModel): Boolean {
         return try {
-            artistDao.saveArtist(
-                ArtistEntity(
-                    artistId = artistId,
-                    name = name,
-                    followers = followers,
-                    popularity = popularity,
-                    image = image,
-                    genders = genders.joinToString(","),
-                ),
-            )
+            artistDao.saveArtist(artistModel.mapToEntity())
             true
         } catch (e: Exception) {
             false

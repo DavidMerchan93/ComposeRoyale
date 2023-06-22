@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ComposeRoyal</string>
 
+    <string name="error.message">Se ha producido un error, vuelva a intentarlo.</string>
+
     <string name="artist_detail.followers">Seguidores</string>
     <string name="artist_detail.popularity">Popularidad</string>
     <string name="artist_detail.top_tracks_title">Top Tracks</string>

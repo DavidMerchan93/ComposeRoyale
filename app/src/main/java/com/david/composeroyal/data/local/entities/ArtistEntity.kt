@@ -7,7 +7,7 @@ import com.david.composeroyal.domain.models.ArtistModel
 
 @Entity
 data class ArtistEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val uid: Int = 0,
     @ColumnInfo(name = "artist_id")
     val artistId: String,
