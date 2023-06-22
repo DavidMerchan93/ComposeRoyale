@@ -11,7 +11,7 @@ interface ArtistDao {
     fun getAll(): List<ArtistEntity>
 
     @Query("SELECT * FROM ArtistEntity WHERE artist_id=:id")
-    fun getArtistById(id: String): List<ArtistEntity>
+    fun getArtistById(id: String): ArtistEntity?
 
     @Insert
     fun saveArtist(artistEntity: ArtistEntity)

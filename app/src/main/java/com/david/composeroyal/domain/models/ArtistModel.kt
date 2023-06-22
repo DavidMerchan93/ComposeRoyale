@@ -8,4 +8,5 @@ data class ArtistModel(
     val followersCount: Int,
     val genres: List<String>,
     val popularity: Int,
+    val isFavorite: Boolean = false,
 )

@@ -7,8 +7,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.david.composeroyal.common.getString
-import com.david.composeroyal.domain.models.ArtistModel
-import com.david.composeroyal.domain.models.TrackModel
 import com.david.composeroyal.domain.useCase.GetArtistUseCase
 import com.david.composeroyal.domain.useCase.GetTracksUseCase
 import com.david.composeroyal.presentation.states.ArtistTracksState
@@ -25,18 +23,17 @@ import javax.inject.Inject
 class ArtistViewModel @Inject constructor(
     private val getArtistUseCase: GetArtistUseCase,
     private val getTracksUseCase: GetTracksUseCase,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-    var artistInfo: ArtistModel? = null
-        private set
-
-    val tracksArtistInfo = mutableListOf<TrackModel>()
 
     var artisTrackState by mutableStateOf(ArtistTracksState(isLoading = true))
         private set
 
     init {
+        getArtistDetail()
+    }
+
+    fun getArtistDetail() {
         savedStateHandle.getString(NavigationArgs.ARTIST_ID.key)?.let { id ->
             getArtistData(id)
             getTopTracks(id)
@@ -45,22 +42,17 @@ class ArtistViewModel @Inject constructor(
 
     private fun getArtistData(id: String) {
         getArtistUseCase(id).catch {
-            artistInfo = null
             artisTrackState = ArtistTracksState(isError = true)
         }.map {
-            artistInfo = it
-            artisTrackState = ArtistTracksState(artist = it)
+            artisTrackState = artisTrackState.copy(artist = it, isError = false)
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }
 
     private fun getTopTracks(id: String) {
         getTracksUseCase(id).catch {
-            tracksArtistInfo.clear()
             artisTrackState = ArtistTracksState(isError = true)
         }.map {
-            tracksArtistInfo.clear()
-            tracksArtistInfo.addAll(it)
-            artisTrackState = ArtistTracksState(tracks = it)
+            artisTrackState = artisTrackState.copy(tracks = it, isError = false)
         }.flowOn(Dispatchers.IO).launchIn(viewModelScope)
     }
 }

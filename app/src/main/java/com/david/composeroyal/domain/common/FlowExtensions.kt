@@ -2,6 +2,8 @@ package com.david.composeroyal.domain.common
 
 import com.david.composeroyal.data.api.common.Constants
 import com.david.composeroyal.data.models.InvalidTokenException
+import com.david.composeroyal.domain.models.ArtistModel
+import com.david.composeroyal.domain.useCase.CheckLocalArtistUseCase
 import com.david.composeroyal.domain.useCase.UpdateAccessTokenUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

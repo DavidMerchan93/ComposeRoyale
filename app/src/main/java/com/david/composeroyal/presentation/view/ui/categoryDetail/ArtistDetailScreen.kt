@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,21 +43,36 @@ import com.david.composeroyal.domain.models.ArtistModel
 import com.david.composeroyal.domain.models.TrackModel
 import com.david.composeroyal.presentation.view.common.ErrorMessage
 import com.david.composeroyal.presentation.view.common.Loader
+import com.david.composeroyal.presentation.viewModels.ArtistLocalViewModel
 import com.david.composeroyal.presentation.viewModels.ArtistViewModel
 
 @Composable
 fun ArtistDetailScreen(
     artistViewModel: ArtistViewModel = hiltViewModel(),
+    artistLocalViewModel: ArtistLocalViewModel = hiltViewModel(),
 ) {
     val artisTrackState = artistViewModel.artisTrackState
+    val artistLocalState = artistLocalViewModel.artistLocalState
 
     when {
-        artistViewModel.artistInfo != null && artistViewModel.tracksArtistInfo.isNotEmpty() -> {
-            AT(
-                artistModel = artistViewModel.artistInfo,
-                tracks = artistViewModel.tracksArtistInfo,
-                addToFavorites = { },
-            )
+        artisTrackState.artist != null && artisTrackState.tracks.isNotEmpty() -> {
+            ArtistTracksData(
+                artistModel = artisTrackState.artist,
+                tracks = artisTrackState.tracks,
+            ) { artist ->
+                if (artist.isFavorite) {
+                    artistLocalViewModel.deleteArtist(artist.id)
+                } else {
+                    artistLocalViewModel.saveArtist(
+                        artistId = artist.id,
+                        name = artist.name,
+                        image = artist.images.randomOrNull() ?: String(),
+                        followers = artist.followersCount,
+                        popularity = artist.popularity,
+                        genders = artist.genres,
+                    )
+                }
+            }
         }
 
         artisTrackState.isError -> {
@@ -69,10 +83,19 @@ fun ArtistDetailScreen(
             Loader()
         }
     }
+    when {
+        artistLocalState.isSaved -> {
+            artistViewModel.getArtistDetail()
+        }
+
+        artistLocalState.isDeleted -> {
+            artistViewModel.getArtistDetail()
+        }
+    }
 }
 
 @Composable
-fun AT(
+fun ArtistTracksData(
     artistModel: ArtistModel?,
     tracks: List<TrackModel>,
     addToFavorites: (artist: ArtistModel) -> Unit,
@@ -116,6 +139,7 @@ fun ArtistInformation(artistModel: ArtistModel?, addToFavorites: (artist: Artist
         ArtistData(
             followers = it.followersCount,
             popularity = it.popularity,
+            isFavorite = it.isFavorite,
             addToFavorites = { addToFavorites(artistModel) },
         )
     }
@@ -172,6 +196,7 @@ fun ArtistLargeImage(image: String?) {
 fun ArtistData(
     followers: Int,
     popularity: Int,
+    isFavorite: Boolean,
     addToFavorites: () -> Unit,
 ) {
     Row(
@@ -196,7 +221,11 @@ fun ArtistData(
             content = {
                 Icon(
                     imageVector = Icons.Default.Favorite,
-                    tint = Color.Red,
+                    tint = if (isFavorite) {
+                        Color.Red
+                    } else {
+                        Color.Gray
+                    },
                     contentDescription = "add",
                 )
             },
