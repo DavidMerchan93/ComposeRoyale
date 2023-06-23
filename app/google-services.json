@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "949554738042",
+    "project_id": "composeroyal-b2797",
+    "storage_bucket": "composeroyal-b2797.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949554738042:android:8dfaba73cd537f9be11cc3",
+        "android_client_info": {
+          "package_name": "com.david.composeroyal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949554738042-7q0opnodeelpp3joo04r63bub6u7esa9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-8NF_nvsnJLOHXbWE7hrWpxc8eTmTy0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949554738042-7q0opnodeelpp3joo04r63bub6u7esa9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
