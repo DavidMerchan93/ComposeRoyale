@@ -2,6 +2,8 @@ plugins {
     id("com.android.application") version "8.0.2"
     id("org.jetbrains.kotlin.android") version "1.8.0"
     id("com.google.dagger.hilt.android") version "2.44"
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 
     kotlin("plugin.serialization").version("1.6.10")
     kotlin("kapt")
@@ -98,6 +100,11 @@ dependencies {
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.6.0")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
 
     testImplementation("junit:junit:4.13.2")
 

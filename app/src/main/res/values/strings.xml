@@ -3,8 +3,14 @@
 
     <string name="error.message">Se ha producido un error, vuelva a intentarlo.</string>
 
+    <!-- Artist Detail -->
     <string name="artist_detail.followers">Seguidores</string>
     <string name="artist_detail.popularity">Popularidad</string>
     <string name="artist_detail.top_tracks_title">Top Tracks</string>
+
+    <!-- Favorites -->
+    <string name="favorites.empty_text">No tienes artistas en favoritos</string>
+    <string name="favorites.popularity_title">Popularidad: %1$s</string>
+    <string name="favorites.followers_title">Seguidores: %1$s</string>
 
 </resources>

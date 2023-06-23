@@ -119,7 +119,10 @@ fun ArtistTracksData(
 }
 
 @Composable
-fun ArtistInformation(artistModel: ArtistModel?, addToFavorites: (artist: ArtistModel) -> Unit) {
+fun ArtistInformation(
+    artistModel: ArtistModel?,
+    addToFavorites: (artist: ArtistModel) -> Unit,
+) {
     artistModel?.let {
         ArtistLargeImage(image = it.images.randomOrNull())
         Text(
