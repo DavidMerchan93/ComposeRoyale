@@ -12,6 +12,7 @@ fun CategoryDetailScreen(
     artistSelected: (artistId: String) -> Unit,
 ) {
     val artistsListState = artistsListViewModel.allArtistState
+
     when {
         (artistsListState.isLoading) -> {
             Loader()

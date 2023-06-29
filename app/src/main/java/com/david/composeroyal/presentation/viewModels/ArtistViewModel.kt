@@ -12,18 +12,18 @@ import com.david.composeroyal.domain.useCase.GetTracksUseCase
 import com.david.composeroyal.presentation.states.ArtistTracksState
 import com.david.composeroyal.presentation.view.navigation.NavigationArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 @HiltViewModel
 class ArtistViewModel @Inject constructor(
     private val getArtistUseCase: GetArtistUseCase,
     private val getTracksUseCase: GetTracksUseCase,
-    private val savedStateHandle: SavedStateHandle,
+    private val stateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     var artisTrackState by mutableStateOf(ArtistTracksState(isLoading = true))
@@ -34,7 +34,7 @@ class ArtistViewModel @Inject constructor(
     }
 
     fun getArtistDetail() {
-        savedStateHandle.getString(NavigationArgs.ARTIST_ID.key)?.let { id ->
+        stateHandle.getString(NavigationArgs.ARTIST_ID.key)?.let { id ->
             getArtistData(id)
             getTopTracks(id)
         }

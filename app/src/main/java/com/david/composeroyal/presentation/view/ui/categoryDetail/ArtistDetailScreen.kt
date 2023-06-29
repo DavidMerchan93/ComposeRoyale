@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -28,14 +26,15 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.david.composeroyal.R
@@ -88,15 +87,15 @@ fun ArtistDetailScreen(
 }
 
 @Composable
-fun ArtistTracksData(
+private fun ArtistTracksData(
     artistModel: ArtistModel?,
     tracks: List<TrackModel>,
     addToFavorites: (artist: ArtistModel) -> Unit,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(
-            dimensionResource(R.dimen.dimen_8dp),
-            dimensionResource(R.dimen.dimen_4dp),
+            dimensionResource(R.dimen.dimen_0dp),
+            dimensionResource(R.dimen.dimen_0dp),
         ),
         content = {
             item {
@@ -109,6 +108,7 @@ fun ArtistTracksData(
                         .padding(dimensionResource(R.dimen.dimen_16dp)),
                     text = stringResource(R.string.artist_detail_top_tracks_title),
                     textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
                 )
             }
             items(tracks) { track ->
@@ -131,6 +131,7 @@ fun ArtistInformation(
                 .padding(dimensionResource(R.dimen.dimen_16dp)),
             text = it.name,
             textAlign = TextAlign.Center,
+            fontSize = 24.sp,
         )
         ArtistData(
             followers = it.followersCount,
@@ -158,16 +159,16 @@ fun TrackItem(track: TrackModel) {
             Column(
                 modifier = Modifier
                     .padding(dimensionResource(R.dimen.dimen_8dp))
-                    .background(Color.Black),
+                    .background(MaterialTheme.colors.surface),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 AsyncImage(
                     modifier = Modifier
-                        .width(dimensionResource(R.dimen.dimen_80dp))
-                        .height(dimensionResource(R.dimen.dimen_80dp))
-                        .clip(CircleShape),
+                        .fillMaxWidth()
+                        .height(dimensionResource(R.dimen.dimen_80dp)),
                     model = album.images.randomOrNull() ?: R.drawable.ic_launcher_foreground,
                     contentDescription = album.name,
+                    contentScale = ContentScale.Crop,
                 )
                 TextTrack(name = track.name)
                 TextTrack(name = track.popularity.toString())
@@ -182,9 +183,10 @@ fun ArtistLargeImage(image: String?) {
     AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
-            .height(dimensionResource(R.dimen.dimen_120dp)),
+            .height(dimensionResource(R.dimen.dimen_180dp)),
         model = image ?: R.drawable.ic_launcher_foreground,
         contentDescription = image ?: String(),
+        contentScale = ContentScale.Crop,
     )
 }
 
@@ -213,7 +215,6 @@ fun ArtistData(
         )
 
         IconButton(
-            modifier = Modifier.weight(1f),
             content = {
                 Icon(
                     imageVector = Icons.Default.Favorite,
@@ -262,7 +263,6 @@ fun TextTrack(name: String) {
             .padding(dimensionResource(R.dimen.dimen_8dp)),
         text = name,
         textAlign = TextAlign.Center,
-        color = colorResource(R.color.purple_200),
         style = MaterialTheme.typography.body1,
     )
 }

@@ -95,7 +95,7 @@ fun ItemFavorite(artistModel: ArtistModel) {
             .fillMaxWidth(),
         onClick = {
             throw RuntimeException("Test Crash")
-        }
+        },
     ) {
         Column(
             modifier = Modifier
@@ -151,7 +151,7 @@ fun ArtistItemText(
     Text(
         modifier = modifier,
         text = text,
-        color = colorResource(R.color.secondary),
+        color = MaterialTheme.colorScheme.secondary,
         fontSize = textSize,
         textAlign = TextAlign.Center,
         fontWeight = fontWeight,
